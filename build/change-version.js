@@ -56,12 +56,20 @@ async function replaceRecursively(file, oldVersion, newVersion) {
 }
 
 async function main(args) {
-  const [oldVersion, newVersion] = args
+  let [oldVersion, newVersion] = args
 
   if (!oldVersion || !newVersion) {
     console.error('USAGE: change-version old_version new_version [--verbose] [--dry[-run]]')
     console.error('Got arguments:', args)
     process.exit(1)
+  }
+
+  if (oldVersion.startsWith('v')) {
+    oldVersion = oldVersion.slice(1)
+  }
+
+  if (newVersion.startsWith('v')) {
+    newVersion = newVersion.slice(1)
   }
 
   try {
